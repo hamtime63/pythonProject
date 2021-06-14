@@ -95,7 +95,7 @@ class MyGame(arcade.Window):
         # Create the physics engine. Give it a reference to the player, and
         # the walls we can't run into.
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
-
+.
     def on_draw(self):
         arcade.start_render()
         self.wall_list.draw()
