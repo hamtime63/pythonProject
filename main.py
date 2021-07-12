@@ -73,9 +73,9 @@ class PlayerCharacter(arcade.Sprite):
         # Images from Kenney.nl's Asset Pack 3
         # main_path = ":resources:images/animated_characters/female_adventurer/femaleAdventurer"
         # main_path = ":resources:images/animated_characters/female_person/femalePerson"
-        main_path = ":resources:images/animated_characters/male_person/malePerson"
+        # main_path = ":resources:images/animated_characters/male_person/malePerson"
         # main_path = ":resources:images/animated_characters/male_adventurer/maleAdventurer"
-        # main_path = ":resources:images/animated_characters/zombie/zombie"
+        main_path = ":resources:images/animated_characters/zombie/zombie"
         # main_path = ":resources:images/animated_characters/robot/robot"
 
         # Load textures for idle standing
@@ -230,7 +230,7 @@ class MyGame(arcade.Window):
         coins_layer_name = 'Coins'
 
         # Map name
-        map_name = f":resources:tmx_maps/map_with_ladders.tmx"
+        map_name = f":resources:tmx_maps/dig42.tmx"
 
         # Read in the tiled map
         my_map = arcade.tilemap.read_tmx(map_name)
