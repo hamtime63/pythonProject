@@ -75,8 +75,8 @@ class PlayerCharacter(arcade.Sprite):
         # main_path = ":resources:images/animated_characters/female_person/femalePerson"
         # main_path = ":resources:images/animated_characters/male_person/malePerson"
         # main_path = ":resources:images/animated_characters/male_adventurer/maleAdventurer"
-        main_path = ":resources:images/animated_characters/zombie/zombie"
-        # main_path = ":resources:images/animated_characters/robot/robot"
+        # main_path = ":resources:images/animated_characters/zombie/zombie"
+        main_path = ":resources:images/animated_characters/robot/robot"
 
         # Load textures for idle standing
         self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
@@ -230,7 +230,7 @@ class MyGame(arcade.Window):
         coins_layer_name = 'Coins'
 
         # Map name
-        map_name = f":resources:tmx_maps/dig42.tmx"
+        map_name = f"venv/Lib/site-packages/arcade/resources/tmx_maps/dig42.tmx"
 
         # Read in the tiled map
         my_map = arcade.tilemap.read_tmx(map_name)
@@ -250,8 +250,8 @@ class MyGame(arcade.Window):
             self.wall_list.append(sprite)
 
         # -- Background objects
-        self.background_list = arcade.tilemap.process_layer(my_map, "Background", TILE_SCALING)
-
+        self.background_list = arcade.tile
+map.process_layer(my_map, "Background", TILE_SCALING)
         # -- Background objects
         self.ladder_list = arcade.tilemap.process_layer(my_map, "Ladders",
                                                         TILE_SCALING,
