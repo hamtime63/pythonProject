@@ -252,7 +252,7 @@ class MyGame(arcade.Window):
         # -- Background objects
         self.background_list = arcade.tilemap.process_layer(my_map, "Background", TILE_SCALING)
         # -- Background objects
-        self.ladder_list = arcade.tilemap.pro cess_layer(my_map, "Ladders",
+        self.ladder_list = arcade.tilemap.process_layer(my_map, "Ladders",
                                                         TILE_SCALING,
                                                         use_spatial_hash=True)
 
