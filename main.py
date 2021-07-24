@@ -230,7 +230,7 @@ class MyGame(arcade.Window):
         coins_layer_name = 'Coins'
 
         # Map name
-        map_name = f"venv/Lib/site-packages/arcade/resources/tmx_maps/dig42.tmx"
+        map_name = f"Tiled_Maps/map1.tmx"
 
         # Read in the tiled map
         my_map = arcade.tilemap.read_tmx(map_name)
@@ -250,8 +250,7 @@ class MyGame(arcade.Window):
             self.wall_list.append(sprite)
 
         # -- Background objects
-        self.background_list = arcade.tile
-map.process_layer(my_map, "Background", TILE_SCALING)
+        self.background_list = arcade.tilemap.process_layer(my_map, "Background", TILE_SCALING)
         # -- Background objects
         self.ladder_list = arcade.tilemap.process_layer(my_map, "Ladders",
                                                         TILE_SCALING,
