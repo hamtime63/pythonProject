@@ -1,5 +1,5 @@
 ﻿"""
-Platformer Game
+Digging Game
 
 python -m arcade.examples.platform_tutorial.11_animate_character
 """
@@ -8,12 +8,12 @@ import os
 
 # Constants
 SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 650
+SCREEN_HEIGHT = 500
 SCREEN_TITLE = "Platformer"
 
 # Constants used to scale our sprites from their original size
-TILE_SCALING = 0.5
-CHARACTER_SCALING = TILE_SCALING * 2
+TILE_SCALING = 1
+CHARACTER_SCALING = TILE_SCALING /1.5
 COIN_SCALING = TILE_SCALING
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SCALING)
