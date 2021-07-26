@@ -9,7 +9,7 @@ import os
 # Constants
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 500
-SCREEN_TITLE = "Platformer"
+SCREEN_TITLE = "TTGTTT - Graeme (Try To Get To The Top)"
 
 # Constants used to scale our sprites from their original size
 TILE_SCALING = 1

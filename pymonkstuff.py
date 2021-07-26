@@ -20,8 +20,8 @@ import pymunk
 import timeit
 import math
 
-SCREEN_WIDTH = 1800
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 500
 SCREEN_TITLE = "Pymunk test"
 
 
