@@ -273,7 +273,7 @@ class MyGame(arcade.Window):
                                                              ladders=self.ladder_list)
 
     def on_draw(self):
-        """ Render the screen. """
+        """ Rend er the screen. """
 
         # Clear the screen to the background color
         arcade.start_render()
@@ -284,6 +284,8 @@ class MyGame(arcade.Window):
         self.ladder_list.draw()
         self.coin_list.draw()
         self.player_list.draw()
+        self.draw_time = 0
+        self.processing_time = 0
 
         # Draw our score on the screen, scrolling it with the viewport
         score_text = f"Score: {self.score}"
