@@ -1,7 +1,10 @@
 ﻿"""
 Digging Game
 
-python -m arcade.examples.platform_tutorial.11_animate_character
+This is my really fun game about digging to the bottom, another version
+of this is trying to get to the top of the map, the end result of that particular
+game is nothing but this one should have better end results and a starting part of it.
+Blah Blah Blah.
 """
 import arcade
 import os
@@ -9,7 +12,7 @@ import os
 # Constants
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 500
-SCREEN_TITLE = "TTGTTT - Graeme (Try To Get To The Top)"
+SCREEN_TITLE = "Digging Game - Graeme Hodgson"
 
 # Constants used to scale our sprites from their original size
 TILE_SCALING = 1
@@ -159,6 +162,8 @@ class MyGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
         # Set the path to start with this program
+        self.draw_time = 0
+        self.processing_time = 0
         file_path = os.path.dirname(os.path.abspath(__file__))
         os.chdir(file_path)
 
@@ -284,8 +289,6 @@ class MyGame(arcade.Window):
         self.ladder_list.draw()
         self.coin_list.draw()
         self.player_list.draw()
-        self.draw_time = 0
-        self.processing_time = 0
 
         # Draw our score on the screen, scrolling it with the viewport
         score_text = f"Score: {self.score}"
