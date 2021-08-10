@@ -278,7 +278,7 @@ class MyGame(arcade.Window):
                                                              ladders=self.ladder_list)
 
     def on_draw(self):
-        """ Rend er the screen. """
+        """ Render the screen. """
 
         # Clear the screen to the background color
         arcade.start_render()
