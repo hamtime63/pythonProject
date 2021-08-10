@@ -199,7 +199,7 @@ class MyGame(arcade.Window):
         self.score = 0
 
         # Load sounds
-        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")#********************************************************************
+        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav") #********************************************************************
         self.jump_sound = arcade.load_sound(":resources:sounds/jump1.wav")
         self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
 
@@ -416,7 +416,7 @@ class MyGame(arcade.Window):
 
             # Remove the gold
             gold.remove_from_sprite_lists()
-            # arcade.play_sound(self.collect_gold_sound)#******************************************************************************************************
+            # arcade.play_sound(self.collect_gold_sound) #******************************************************************************************************
 
         # Track if we need to change the viewport
         changed_viewport = False
