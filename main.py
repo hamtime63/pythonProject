@@ -416,7 +416,7 @@ class MyGame(arcade.Window):
 
             # Remove the gold
             gold.remove_from_sprite_lists()
-            arcade.play_sound(self.collect_gold_sound)
+            # arcade.play_sound(self.collect_gold_sound)#******************************************************************************************************
 
         # Track if we need to change the viewport
         changed_viewport = False
