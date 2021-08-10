@@ -8,6 +8,7 @@ Blah Blah Blah.
 """
 import arcade
 import os
+import time
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -17,7 +18,7 @@ SCREEN_TITLE = "Digging Game - Graeme Hodgson"
 # Constants used to scale our sprites from their original size
 TILE_SCALING = 1
 CHARACTER_SCALING = TILE_SCALING /1.5
-COIN_SCALING = TILE_SCALING
+GOLD_SCALING = TILE_SCALING
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SCALING)
 
@@ -176,7 +177,7 @@ class MyGame(arcade.Window):
 
         # These are 'lists' that keep track of our sprites. Each sprite should
         # go into a list.
-        self.coin_list = None
+        self.gold_list = None
         self.wall_list = None
         self.background_list = None
         self.ladder_list = None
@@ -198,7 +199,7 @@ class MyGame(arcade.Window):
         self.score = 0
 
         # Load sounds
-        self.collect_coin_sound = arcade.load_sound(":resources:sounds/coin1.wav")
+        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")#********************************************************************
         self.jump_sound = arcade.load_sound(":resources:sounds/jump1.wav")
         self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
 
@@ -216,7 +217,7 @@ class MyGame(arcade.Window):
         self.player_list = arcade.SpriteList()
         self.background_list = arcade.SpriteList()
         self.wall_list = arcade.SpriteList()
-        self.coin_list = arcade.SpriteList()
+        self.gold_list = arcade.SpriteList()
 
         # Set up the player, specifically placing it at these coordinates.
         self.player_sprite = PlayerCharacter()
@@ -232,7 +233,7 @@ class MyGame(arcade.Window):
         moving_platforms_layer_name = 'Moving Platforms'
 
         # Name of the layer that has items for pick-up
-        coins_layer_name = 'Coins'
+        gold_layer_name = 'Gold'
 
         # Map name
         map_name = f"Tiled_Maps/map1.tmx"
@@ -261,8 +262,8 @@ class MyGame(arcade.Window):
                                                         TILE_SCALING,
                                                         use_spatial_hash=True)
 
-        # -- Coins
-        self.coin_list = arcade.tilemap.process_layer(my_map, coins_layer_name,
+        # -- Gold
+        self.gold_list = arcade.tilemap.process_layer(my_map, gold_layer_name,
                                                       TILE_SCALING,
                                                       use_spatial_hash=True)
 
@@ -287,7 +288,7 @@ class MyGame(arcade.Window):
         self.wall_list.draw()
         self.background_list.draw()
         self.ladder_list.draw()
-        self.coin_list.draw()
+        self.gold_list.draw()
         self.player_list.draw()
 
         # Draw our score on the screen, scrolling it with the viewport
@@ -380,7 +381,7 @@ class MyGame(arcade.Window):
             self.player_sprite.is_on_ladder = False
             self.process_keychange()
 
-        self.coin_list.update_animation(delta_time)
+        self.gold_list.update_animation(delta_time)
         self.background_list.update_animation(delta_time)
         self.player_list.update_animation(delta_time)
 
@@ -399,23 +400,23 @@ class MyGame(arcade.Window):
             if wall.boundary_bottom and wall.bottom < wall.boundary_bottom and wall.change_y < 0:
                 wall.change_y *= -1
 
-        # See if we hit any coins
-        coin_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
-                                                             self.coin_list)
+        # See if we hit any Gold
+        gold_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.gold_list)
 
-        # Loop through each coin we hit (if any) and remove it
-        for coin in coin_hit_list:
+        # Loop through each gold we hit (if any) and remove it
+        for gold in gold_hit_list:
 
-            # Figure out how many points this coin is worth
-            if 'Points' not in coin.properties:
-                print("Warning, collected a coin without a Points property.")
+            # Figure out how many points this gold is worth
+            if 'Points' not in gold.properties:
+                print("Warning, collected a gold without a Points property.")
             else:
-                points = int(coin.properties['Points'])
+                points = int(gold.properties['Points'])
                 self.score += points
 
-            # Remove the coin
-            coin.remove_from_sprite_lists()
-            arcade.play_sound(self.collect_coin_sound)
+            # Remove the gold
+            gold.remove_from_sprite_lists()
+            arcade.play_sound(self.collect_gold_sound)
 
         # Track if we need to change the viewport
         changed_viewport = False
