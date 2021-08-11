@@ -6,9 +6,8 @@ of this is trying to get to the top of the map, the end result of that particula
 game is nothing but this one should have better end results and a starting part of it.
 Blah Blah Blah.
 """
-import arcade
 import os
-import time
+import arcade
 
 # Constants
 SCREEN_WIDTH = 1000
