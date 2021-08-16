@@ -22,9 +22,9 @@ SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SCALING)
 
 # Movement speed of player, in pixels per frame
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 10
 GRAVITY = 1.5
-PLAYER_JUMP_SPEED = 30
+PLAYER_JUMP_SPEED = 20
 
 # How many pixels to keep as a minimum margin between the character
 # and the edge of the screen.
@@ -72,17 +72,10 @@ class PlayerCharacter(arcade.Sprite):
         self.is_on_ladder = False
 
         # --- Load Textures ---
-
-        # Images from Kenney.nl's Asset Pack 3
-        # main_path = ":resources:images/animated_characters/female_adventurer/femaleAdventurer"
-        # main_path = ":resources:images/animated_characters/female_person/femalePerson"
-        # main_path = ":resources:images/animated_characters/male_person/malePerson"
-        # main_path = ":resources:images/animated_characters/male_adventurer/maleAdventurer"
-        # main_path = ":resources:images/animated_characters/zombie/zombie"
         main_path = ":resources:images/animated_characters/robot/robot"
 
         # Load textures for idle standing
-        self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
+        self.idle_texture_pair = load_texture_pair(f"Pythonimages_Digger/digger_idle.png")
         self.jump_texture_pair = load_texture_pair(f"{main_path}_jump.png")
         self.fall_texture_pair = load_texture_pair(f"{main_path}_fall.png")
 
@@ -198,7 +191,7 @@ class MyGame(arcade.Window):
         self.score = 0
 
         # Load sounds
-        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav") #********************************************************************
+        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")  #********************************************************************
         self.jump_sound = arcade.load_sound(":resources:sounds/jump1.wav")
         self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
 
