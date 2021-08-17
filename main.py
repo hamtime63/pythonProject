@@ -77,7 +77,7 @@ class PlayerCharacter(arcade.Sprite):
         # Load textures for idle standing
         self.idle_texture_pair = load_texture_pair(f"Pythonimages_Digger/digger_idle.png")
         self.jump_texture_pair = load_texture_pair(f"{main_path}_jump.png")
-        self.fall_texture_pair = load_texture_pair(f"{main_path}_fall.png")
+        self.fall_texture_pair = load_texture_pair(f"Pythonimages_Digger/digger_fall.png")
 
         # Load textures for walking
         self.walk_textures = []
