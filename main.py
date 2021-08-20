@@ -8,6 +8,9 @@ Blah Blah Blah.
 """
 import os
 import arcade
+import msvcrt as m
+def wait():
+    m.getch()
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -75,7 +78,7 @@ class PlayerCharacter(arcade.Sprite):
         # Load textures for walking
         self.walk_textures = []
         for i in range(8):
-            texture = load_texture_pair(f"{main_path}_walk{i}.png")
+            texture = load_texture_pair(f"pythonProject/Images")
             self.walk_textures.append(texture)
 
         # Set the initial texture
