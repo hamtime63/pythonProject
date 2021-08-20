@@ -158,8 +158,8 @@ class MyGame(arcade.Window):
         self.score = 0
 
         # Load sounds
-        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")#********************************************************************
-        self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
+        # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")
+        # self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
