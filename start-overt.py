@@ -19,6 +19,7 @@ SCREEN_TITLE = "Digging Game - Graeme Hodgson"
 TILE_SCALING = 1
 CHARACTER_SCALING = TILE_SCALING /1.5
 GOLD_SCALING = TILE_SCALING
+Coal_SCALING = TILE_SCALING
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SCALING)
 
@@ -137,6 +138,7 @@ class MyGame(arcade.Window):
         # These are 'lists' that keep track of our sprites. Each sprite should
         # go into a list.
         self.gold_list = None
+        self.coal_list = None
         self.wall_list = None
         self.background_list = None
         self.ladder_list = None
@@ -159,6 +161,7 @@ class MyGame(arcade.Window):
 
         # Load sounds
         # self.collect_gold_sound = arcade.load_sound(":resources:sounds/gold1.wav")
+        # self.collect_coal_sound = arcade.load_sound(":resourses:sounds/coal.wav")
         # self.game_over = arcade.load_sound(":resources:sounds/gameover1.wav")
 
     def setup(self):
@@ -176,6 +179,7 @@ class MyGame(arcade.Window):
         self.background_list = arcade.SpriteList()
         self.wall_list = arcade.SpriteList()
         self.gold_list = arcade.SpriteList()
+        self.coal_list = arcade.SpriteList()
 
         # Set up the player, specifically placing it at these coordinates.
         self.player_sprite = PlayerCharacter()
@@ -188,10 +192,10 @@ class MyGame(arcade.Window):
 
         # Name of the layer in the file that has our platforms/walls
         platforms_layer_name = 'Platforms'
-        moving_platforms_layer_name = 'Moving Platforms'
 
-        # Name of the layer that has items for pick-up
+        # Names of the layers that has items for picking up
         gold_layer_name = 'Gold'
+        coal_layer_name = 'Coal'
 
         # Map name
         map_name = f"Tiled_Maps/map1.tmx"
@@ -208,20 +212,16 @@ class MyGame(arcade.Window):
                                                       TILE_SCALING,
                                                       use_spatial_hash=True)
 
-        # -- Moving Platforms
-        moving_platforms_list = arcade.tilemap.process_layer(my_map, moving_platforms_layer_name, TILE_SCALING)
-        for sprite in moving_platforms_list:
-            self.wall_list.append(sprite)
-
         # -- Background objects
         self.background_list = arcade.tilemap.process_layer(my_map, "Background", TILE_SCALING)
-        # -- Background objects
-        self.ladder_list = arcade.tilemap.process_layer(my_map, "Ladders",
-                                                        TILE_SCALING,
-                                                        use_spatial_hash=True)
 
-        # -- Gold
+        # Gold
         self.gold_list = arcade.tilemap.process_layer(my_map, gold_layer_name,
+                                                      TILE_SCALING,
+                                                      use_spatial_hash=True)
+
+        # Coal
+        self.coal_list = arcade.tilemap.process_layer(my_map, coal_layer_name,
                                                       TILE_SCALING,
                                                       use_spatial_hash=True)
 
@@ -245,8 +245,8 @@ class MyGame(arcade.Window):
         # Draw our sprites
         self.wall_list.draw()
         self.background_list.draw()
-        self.ladder_list.draw()
         self.gold_list.draw()
+        self.coal_list.draw()
         self.player_list.draw()
 
         # Draw our score on the screen, scrolling it with the viewport
@@ -315,27 +315,17 @@ class MyGame(arcade.Window):
         # Move the player with the physics engine
         self.physics_engine.update()
         self.gold_list.update_animation(delta_time)
+        self.coal_list.update_animation(delta_time)
         self.background_list.update_animation(delta_time)
         self.player_list.update_animation(delta_time)
-
-        # Update walls, used with moving platforms
-        self.wall_list.update()
-
-        # See if the moving wall hit a boundary and needs to reverse direction.
-        for wall in self.wall_list:
-
-            if wall.boundary_right and wall.right > wall.boundary_right and wall.change_x > 0:
-                wall.change_x *= -1
-            if wall.boundary_left and wall.left < wall.boundary_left and wall.change_x < 0:
-                wall.change_x *= -1
-            if wall.boundary_top and wall.top > wall.boundary_top and wall.change_y > 0:
-                wall.change_y *= -1
-            if wall.boundary_bottom and wall.bottom < wall.boundary_bottom and wall.change_y < 0:
-                wall.change_y *= -1
 
         # See if we hit any Gold
         gold_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
                                                              self.gold_list)
+
+        # See if we hit any Coal
+        coal_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.coal_list)
 
         # Loop through each gold we hit (if any) and remove it
         for gold in gold_hit_list:
@@ -350,6 +340,20 @@ class MyGame(arcade.Window):
             # Remove the gold
             gold.remove_from_sprite_lists()
             arcade.play_sound(self.collect_gold_sound)
+
+            # Loop through each coal we hit (if any) and remove it
+            for coal in coal_hit_list:
+
+                # Figure out how many points this coal is worth
+                if 'Points' not in coal.properties:
+                    print("Warning, collected a coal without a Points property.")
+                else:
+                    points = int(coal.properties['Points'])
+                    self.score += points
+
+                # Remove the coal
+                coal.remove_from_sprite_lists()
+                arcade.play_sound(self.collect_coal_sound)
 
         # Track if we need to change the viewport
         changed_viewport = False
