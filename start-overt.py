@@ -7,7 +7,7 @@ game is nothing but this one should have better end results and a starting part 
 Blah Blah Blah.
 """
 import os
-
+import random
 import arcade
 
 # Constants
@@ -22,6 +22,7 @@ GOLD_SCALING = TILE_SCALING
 Coal_SCALING = TILE_SCALING
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SCALING)
+SPRITE_SCALING_LASER = 0.8
 
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 7
@@ -259,6 +260,61 @@ class MyGame(arcade.Window):
         #     wall.draw_hit_box(arcade.color.BLACK, 3)
         #
         # self.player_sprite.draw_hit_box(arcade.color.RED, 3)
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        """
+        Called whenever the mouse moves.
+        """
+        self.player_sprite.center_x = x
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        """
+        Called whenever the mouse button is clicked.
+        """
+
+        # Create a bullet
+        bullet = arcade.Sprite("laserBlue01.png", SPRITE_SCALING_LASER)
+
+        # The image points to the right, and we want it to point up. So
+        # rotate it.
+        bullet.angle = 90
+
+        # Position the bullet
+        bullet.center_x = self.player_sprite.center_x
+        bullet.bottom = self.player_sprite.top
+
+        # Makes bullet move up
+        bullet.change_y = BULLET_SPEED
+        bullet.change_x = BULLET_SPEED
+
+        # Add the bullet to the appropriate lists
+        self.bullet_list.append(bullet)
+
+    def update(self, delta_time):
+        """ Movement and game logic """
+
+        # Call update on all sprites
+        self.coin_list.update()
+        self.bullet_list.update()
+
+        # Loop through each bullet
+        for bullet in self.bullet_list:
+
+            # Check this bullet to see if it hit a coin
+            hit_list = arcade.check_for_collision_with_list(bullet, self.coin_list)
+
+            # If it did, get rid of the bullet
+            if len(hit_list) > 0:
+                bullet.remove_from_sprite_lists()
+
+            # For every coin we hit, add to the score and remove the coin
+            for coin in hit_list:
+                coin.remove_from_sprite_lists()
+                self.score += 1
+
+            # If the bullet flies off-screen, remove it.
+            if bullet.bottom > SCREEN_HEIGHT:
+                bullet.remove_from_sprite_lists()
 
     def process_keychange(self):
         """
