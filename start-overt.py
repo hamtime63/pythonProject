@@ -7,7 +7,6 @@ game is nothing but this one should have better end results and a starting part 
 Blah Blah Blah.
 """
 import os
-import random
 import arcade
 
 # Constants
@@ -27,6 +26,9 @@ SPRITE_SCALING_LASER = 0.8
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 7
 GRAVITY = 1.5
+
+# Bullet attributes
+BULLET_SPEED = 10
 
 # How many pixels to keep as a minimum margin between the character
 # and the edge of the screen.
@@ -63,6 +65,11 @@ class PlayerCharacter(arcade.Sprite):
 
         # Default to face-right
         self.character_face_direction = RIGHT_FACING
+
+        # Variables that will hold sprite lists
+        self.player_list = None
+        self.platforms_list = None
+        self.bullet_list = None
 
         # Used for flipping between image sequences
         self.cur_texture = 0
@@ -144,6 +151,7 @@ class MyGame(arcade.Window):
         self.background_list = None
         self.ladder_list = None
         self.player_list = None
+        self.bullet_list = None
 
         # Separate variable that holds the player sprite
         self.player_sprite = None
@@ -181,6 +189,7 @@ class MyGame(arcade.Window):
         self.wall_list = arcade.SpriteList()
         self.gold_list = arcade.SpriteList()
         self.coal_list = arcade.SpriteList()
+        self.bullet_list = arcade.SpriteList()
 
         # Set up the player, specifically placing it at these coordinates.
         self.player_sprite = PlayerCharacter()
@@ -249,6 +258,7 @@ class MyGame(arcade.Window):
         self.gold_list.draw()
         self.coal_list.draw()
         self.player_list.draw()
+        self.platforms_list.draw()
 
         # Draw our score on the screen, scrolling it with the viewport
         score_text = f"Score: {self.score}"
@@ -294,22 +304,22 @@ class MyGame(arcade.Window):
         """ Movement and game logic """
 
         # Call update on all sprites
-        self.coin_list.update()
+        self.platforms_list.update()
         self.bullet_list.update()
 
         # Loop through each bullet
         for bullet in self.bullet_list:
 
-            # Check this bullet to see if it hit a coin
-            hit_list = arcade.check_for_collision_with_list(bullet, self.coin_list)
+            # Check this bullet to see if it hit a block
+            hit_list = arcade.check_for_collision_with_list(bullet, self.platforms_list)
 
             # If it did, get rid of the bullet
             if len(hit_list) > 0:
                 bullet.remove_from_sprite_lists()
 
-            # For every coin we hit, add to the score and remove the coin
-            for coin in hit_list:
-                coin.remove_from_sprite_lists()
+            # For every block we hit, add to the score and remove the block
+            for platforms in hit_list:
+                platforms.remove_from_sprite_lists()
                 self.score += 1
 
             # If the bullet flies off-screen, remove it.
