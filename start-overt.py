@@ -223,6 +223,12 @@ class MyGame(arcade.Window):
                                                       TILE_SCALING,
                                                       use_spatial_hash=True)
 
+        # -- Platforms
+        self.platforms_list = arcade.tilemap.process_layer(my_map,
+                                                           platforms_layer_name,
+                                                           TILE_SCALING,
+                                                           use_spatial_hash=True)
+
         # -- Background objects
         self.background_list = arcade.tilemap.process_layer(my_map, "Background", TILE_SCALING)
 
@@ -254,11 +260,12 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Draw our sprites
+        self.background_list.draw()
+        self.platforms_list.draw()
         self.wall_list.draw()
         self.gold_list.draw()
         self.coal_list.draw()
         self.player_list.draw()
-        self.platforms_list.draw()
 
         # Draw our score on the screen, scrolling it with the viewport
         score_text = f"Score: {self.score}"
