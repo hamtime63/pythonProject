@@ -8,6 +8,7 @@ that's the point of the game
 
 import os
 import arcade
+import pyglet
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -94,7 +95,7 @@ class PlayerCharacter(arcade.Sprite):
         # Hit box will be set based on the first image used. If you want to specify
         # a different hit box, you can do it like the code below.
         # self.set_hit_box([[-22, -64], [22, -64], [22, 28], [-22, 28]])
-        self.set_hit_box(self.texture.hit_box_points)
+        # self.set_hit_box(self.texture.hit_box_points)
 
     def update_animation(self, delta_time: float = 1 / 60):
 
@@ -142,12 +143,14 @@ class MyGame(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
 
+        # Background sound
+        pyglet.media.Player()  # Might need to figure this one out.
+
         # These are 'lists' that keep track of our sprites. Each sprite should
         # go into a list.
         self.gold_list = None
         self.coal_list = None
         self.background_list = None
-        self.ladder_list = None
         self.player_list = None
         self.bullet_list = None
         self.platforms_list = None
@@ -214,7 +217,6 @@ class MyGame(arcade.Window):
 
         # Calculate the right edge of the my_map in pixels
         self.end_of_map = my_map.map_size.width * GRID_PIXEL_SIZE
-
 
         # -- Platforms
         self.platforms_list = arcade.tilemap.process_layer(my_map,
@@ -309,7 +311,6 @@ class MyGame(arcade.Window):
             # For every block we hit, add to the score and remove the block
             for platforms in hit_list:
                 platforms.remove_from_sprite_lists()
-                self.score += 1
 
             # If the bullet flies off-screen, remove it.
             if bullet.bottom > SCREEN_HEIGHT:
