@@ -2,8 +2,8 @@
 Digging Game
 
 This is my really fun game about shooting your way to the bottom,
-once ypu reach the bottom you get as much gold as you want, that's
-the point of the game
+once you reach the bottom you get as much gold and coal as you want,
+that's the point of the game
 """
 
 import os
@@ -76,7 +76,7 @@ class PlayerCharacter(arcade.Sprite):
 
         # main_path variable
         main_path = "images/digger"
-        main_path2 = "Sounds"
+        # main_path2 = "Sounds"
 
         # Load textures for idle standing
         self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
@@ -151,6 +151,7 @@ class MyGame(arcade.Window):
         self.ladder_list = None
         self.player_list = None
         self.bullet_list = None
+        self.platforms_list = None
 
         # Separate variable that holds the player sprite
         self.player_sprite = None
@@ -168,8 +169,8 @@ class MyGame(arcade.Window):
         self.score = 0
 
         # Load sounds
-        # self.collect_gold_sound = arcade.load_sound("f"{main_path}sounds/gold1.wav")
-        # self.collect_coal_sound = arcade.load_sound("f"{main_path}sounds/coal.wav")
+        self.collect_gold_sound = arcade.load_sound("Sounds/gold1.wav")
+        self.collect_coal_sound = arcade.load_sound("Sounds/coal.wav")
         # self.game_over = arcade.load_sound("f"{main_path}sounds/gameover1.wav")
 
     def setup(self):
@@ -249,7 +250,7 @@ class MyGame(arcade.Window):
 
         # Create the 'physics engine'
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
-                                                             self.wall_list,
+                                                             self.platforms_list,
                                                              gravity_constant=GRAVITY,
                                                              ladders=self.ladder_list)
 
@@ -277,6 +278,7 @@ class MyGame(arcade.Window):
             wall.draw_hit_box(arcade.color.BLACK, 3)
         #
         self.player_sprite.draw_hit_box(arcade.color.RED, 3)
+
 
     def on_mouse_press(self, x, y, button, modifiers):
 
@@ -308,6 +310,7 @@ class MyGame(arcade.Window):
         # Call update on all sprites
         self.platforms_list.update()
         self.bullet_list.update()
+        self.player_list.update()
 
         # Loop through each bullet
         for bullet in self.bullet_list:
@@ -406,7 +409,7 @@ class MyGame(arcade.Window):
 
             # Remove the gold
             gold.remove_from_sprite_lists()
-            # arcade.play_sound(self.collect_gold_sound)
+            arcade.play_sound(self.collect_gold_sound)
 
             # Loop through each coal we hit (if any) and remove it
             for coal in coal_hit_list:
@@ -420,7 +423,7 @@ class MyGame(arcade.Window):
 
                 # Remove the coal
                 coal.remove_from_sprite_lists()
-                # arcade.play_sound(self.collect_coal_sound)
+                arcade.play_sound(self.collect_coal_sound)
 
         # Track if we need to change the viewport
         changed_viewport = False
