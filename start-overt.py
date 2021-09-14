@@ -146,7 +146,6 @@ class MyGame(arcade.Window):
         # go into a list.
         self.gold_list = None
         self.coal_list = None
-        self.wall_list = None
         self.background_list = None
         self.ladder_list = None
         self.player_list = None
@@ -186,7 +185,6 @@ class MyGame(arcade.Window):
         # Create the Sprite lists
         self.player_list = arcade.SpriteList()
         self.background_list = arcade.SpriteList()
-        self.wall_list = arcade.SpriteList()
         self.gold_list = arcade.SpriteList()
         self.coal_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
@@ -201,9 +199,8 @@ class MyGame(arcade.Window):
 
         # --- Load in a map from the tiled editor ---
 
-        # Name of the layer in the file that has our platforms/walls
+        # Name of the layer in the file that has our platforms
         platforms_layer_name = 'Platforms'
-        walls_layer_name = 'Walls'
 
         # Names of the layers that has items for picking up
         gold_layer_name = 'Gold'
@@ -218,11 +215,6 @@ class MyGame(arcade.Window):
         # Calculate the right edge of the my_map in pixels
         self.end_of_map = my_map.map_size.width * GRID_PIXEL_SIZE
 
-        # -- walls
-        self.wall_list = arcade.tilemap.process_layer(my_map,
-                                                      walls_layer_name,
-                                                      TILE_SCALING,
-                                                      use_spatial_hash=True)
 
         # -- Platforms
         self.platforms_list = arcade.tilemap.process_layer(my_map,
@@ -263,7 +255,6 @@ class MyGame(arcade.Window):
         # Draw our sprites
         self.background_list.draw()
         self.platforms_list.draw()
-        self.wall_list.draw()
         self.gold_list.draw()
         self.coal_list.draw()
         self.player_list.draw()
@@ -272,13 +263,6 @@ class MyGame(arcade.Window):
         score_text = f"Score: {self.score}"
         arcade.draw_text(score_text, 10 + self.view_left, 10 + self.view_bottom,
                          arcade.csscolor.BLACK, 18)
-
-        # Draw hit boxes.
-        for wall in self.wall_list:
-            wall.draw_hit_box(arcade.color.BLACK, 3)
-        #
-        self.player_sprite.draw_hit_box(arcade.color.RED, 3)
-
 
     def on_mouse_press(self, x, y, button, modifiers):
 
